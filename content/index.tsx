@@ -19,7 +19,7 @@ export function Content<T extends keyof Flatten<typeof obj>>({
   path,
 }: {
   path: T;
-}): React.ReactNode {
+}) {
   const isEditable = useIsEditable();
   let value = get(obj, path);
 
