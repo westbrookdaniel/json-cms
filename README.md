@@ -27,3 +27,7 @@ export default function Home() {
 ```
 
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+
+## TODO
+
+- `useIsEditable` should use a `localStorage` powered zustand store to avoid neededing a full reload when leaving/entering editable mode. 
