@@ -1,19 +1,30 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import obj from "./data.json";
 import { set } from "./util";
 
+export function useIsEditable() {
+  const [isEditable, setIsEditable] = useState(false);
+
+  // Needs to be done in a use effect to not cause hydration errors
+  useEffect(() => {
+    const isEditModeEnabled = localStorage?.getItem("edit_enabled") === "true";
+    setIsEditable(isEditModeEnabled ?? false);
+  }, []);
+
+  return isEditable;
+}
+
 export function ToggleEditButton() {
-  let isEditModeEnabled = false;
-  if (typeof localStorage !== "undefined") {
-    isEditModeEnabled = localStorage.getItem("edit_enabled") === "true";
-  }
+  const isEditable = useIsEditable();
+
   return (
     <div style={{ display: "flex", gap: "8px" }}>
       <button onClick={() => toggleEditableContent()}>
-        {isEditModeEnabled ? "Leave Edit Content" : "Edit Content"}
+        {isEditable ? "Leave Edit Content" : "Edit Content"}
       </button>
-      {isEditModeEnabled ? (
+      {isEditable ? (
         <button onClick={() => exportLocalStorage()}>Export Changes</button>
       ) : null}
     </div>

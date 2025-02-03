@@ -3,6 +3,7 @@
 import obj from "./data.json";
 import { Editable } from "./content";
 import { get } from "./util";
+import { useIsEditable } from "./toggle";
 
 type Flatten<T> = T extends object
   ? T extends Array<infer U>
@@ -19,17 +20,18 @@ export function Content<T extends keyof Flatten<typeof obj>>({
 }: {
   path: T;
 }): React.ReactNode {
+  const isEditable = useIsEditable();
   let value = get(obj, path);
-  if (typeof window !== "undefined") {
-    const storedValue = localStorage.getItem(`edit_${path}`);
-    if (storedValue !== null) {
-      value = JSON.parse(storedValue) as Flatten<typeof obj>[T];
-    }
-  }
 
-  if (typeof localStorage !== "undefined") {
-    const isEditModeEnabled = localStorage.getItem("edit_enabled") === "true";
-    if (isEditModeEnabled) return <Editable path={path} value={value} />;
+  if (isEditable) {
+    if (typeof window !== "undefined") {
+      const storedValue = localStorage.getItem(`edit_${path}`);
+      if (storedValue !== null) {
+        value = JSON.parse(storedValue) as Flatten<typeof obj>[T];
+      }
+    }
+
+    return <Editable path={path} value={value} />;
   }
 
   return (

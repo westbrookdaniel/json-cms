@@ -103,6 +103,7 @@ export function Editable({ path, value }: { path: string; value: string }) {
       ) : null}
       <span
         ref={ref}
+        suppressContentEditableWarning
         contentEditable={isEditing ? "plaintext-only" : undefined}
         style={{ outline: "none" }}
       >
