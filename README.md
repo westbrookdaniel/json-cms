@@ -4,6 +4,7 @@ This is a JSON file based content layer and CMS that allows inline editing with 
 in local storage, with the ability to export all changed as a new complete JSON file.
 
 To get started copy (and read) the code in `./content/` into your own project.
+It's only dependency is `zustand` (for a light global store to improve UX).
 
 ## Example
 
